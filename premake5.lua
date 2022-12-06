@@ -135,11 +135,11 @@ workspace "EmvParser"
 			buildcommands {
 			  "{CHDIR} %{prj.location}",
 			  "./configure --disable-shared",
-			  "make -j$(nproc --ignore=1)"
+			  "make -j$(nproc --ignore=2)"
 		   }
 	   
 		   rebuildcommands {
 			  "{CHDIR} %{prj.location}",
 			  "./configure --disable-shared",
-			  "make -j$(nproc --ignore=1)"
+			  "make -j$(nproc --ignore=2)"
 		   }
