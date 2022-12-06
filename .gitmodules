@@ -1,0 +1,3 @@
+[submodule "thirdparty/EMV-tag-parser"]
+	path = thirdparty/EMV-tag-parser
+	url = git@github.com:victordmontero/EMV-tag-parser.git
