@@ -32,8 +32,6 @@ workspace "EmvParser"
 		
 		ignoredefaultlibraries { "MSVCRTD","MSVCRT" }
 
-		--links{"wxWidgets"}
-
 	  filter "configurations:Debug"
 		defines { "DEBUG", "_DEBUG" }
 		symbols "On"
