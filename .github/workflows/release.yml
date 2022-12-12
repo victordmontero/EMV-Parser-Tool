@@ -31,6 +31,9 @@ jobs:
             body: ${{steps.generate_changelog.outputs.release-notes}}
       env:
           GITHUB_TOKEN: ${{ github.token }}
+    outputs:
+      upload_url: ${{steps.create_release.outputs.upload_url}}
+    
   linux_job:
     needs: release_job
     name: Building for Linux
@@ -59,7 +62,7 @@ jobs:
     - name: Upload Package
       uses: actions/upload-release-asset@v1
       with:
-            upload_url: ${{ needs.release_job.create_release.outputs.upload_url }}
+            upload_url: ${{ needs.release_job.outputs.upload_url }}
             asset_path: bin/Linux/Release/EmvParserLinux.tar.gz
             asset_name: EmvParserLinux.tar.gz
             asset_content_type: application/gzip
@@ -104,7 +107,7 @@ jobs:
       - name: Upload Package
         uses: actions/upload-release-asset@v1
         with:
-            upload_url: ${{ needs.release_job.create_release.outputs.upload_url }}
+            upload_url: ${{ needs.release_job.outputs.upload_url }}
             asset_path: bin/Linux/Release/EMVParserTool32.7z
             asset_name: EMVParserTool32.7z
             asset_content_type: application/x-7z-compressed
@@ -113,7 +116,7 @@ jobs:
       - name: Upload Package
         uses: actions/upload-release-asset@v1
         with:
-            upload_url: ${{ needs.release_job.create_release.outputs.upload_url }}
+            upload_url: ${{ needs.release_job.outputs.upload_url }}
             asset_path: bin/Linux/Release/EMVParserTool64.7z
             asset_name: EMVParserTool64.7z
             asset_content_type: application/x-7z-compressed
