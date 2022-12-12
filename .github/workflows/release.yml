@@ -49,15 +49,15 @@ jobs:
       run: premake5 gmake2
     - name: Installing GTK3
       run: sudo apt-get install libgtk-3-dev
-    - name: Building..
-      run: make config=release_linux
+#     - name: Building..
+#       run: make config=release_linux
     - uses: actions/upload-artifact@v3
       with:
         name: EMVParserToolLinux
         path: bin/Linux/Release/EmvParser
         retention-days: 2
     - name: Compressing...
-      run: tar -zcvf bin/Linux/Release/EmvParserLinux.tar.gz bin/Linux/Release/EmvParser
+      run: tar -zcvf bin/Linux/Release/EmvParserLinux.tar.gz premake5.lua
     - name: Upload Package
       uses: actions/upload-release-asset@v1
       with:
@@ -79,30 +79,30 @@ jobs:
         run: choco install premake5 --pre
       - name: Generating Visual Studio Solution
         run: premake5 vs2019
-      - name: Add msbuild (x86) to PATH
-        uses: microsoft/setup-msbuild@v1.1
-      - name: Build app for release 32bits
-        run: msbuild EmvParser.sln -t:rebuild -verbosity:diag -property:Configuration=Release -property:Platform=Win32
-      - name: Add msbuild (x64) to PATH
-        uses: microsoft/setup-msbuild@v1.1
-        with:
-          msbuild-architecture: x64
-      - name: Build app for release 64bits
-        run: msbuild EmvParser.sln -t:rebuild -verbosity:diag -property:Configuration=Release -property:Platform=Win64
-      - uses: actions/upload-artifact@v3
-        with:
-            name: EMVParserTool32
-            path: bin/Win32/Release/EmvParser.exe
-            retention-days: 2
-      - uses: actions/upload-artifact@v3
-        with:
-            name: EMVParserTool64
-            path: bin/Win64/Release/EmvParser.exe
-            retention-days: 2
+#       - name: Add msbuild (x86) to PATH
+#         uses: microsoft/setup-msbuild@v1.1
+#       - name: Build app for release 32bits
+#         run: msbuild EmvParser.sln -t:rebuild -verbosity:diag -property:Configuration=Release -property:Platform=Win32
+#       - name: Add msbuild (x64) to PATH
+#         uses: microsoft/setup-msbuild@v1.1
+#         with:
+#           msbuild-architecture: x64
+#       - name: Build app for release 64bits
+#         run: msbuild EmvParser.sln -t:rebuild -verbosity:diag -property:Configuration=Release -property:Platform=Win64
+#       - uses: actions/upload-artifact@v3
+#         with:
+#             name: EMVParserTool32
+#             path: bin/Win32/Release/EmvParser.exe
+#             retention-days: 2
+#       - uses: actions/upload-artifact@v3
+#         with:
+#             name: EMVParserTool64
+#             path: bin/Win64/Release/EmvParser.exe
+#             retention-days: 2
       - name: Compressing for 32 bits
-        run: 7z a -t7z -mx=9 bin/Linux/Release/EMVParserTool32.7z bin/Win32/Release/EmvParser.exe
+        run: 7z a -t7z -mx=9 bin/Linux/Release/EMVParserTool32.7z premake5.lua
       - name: Compressing for 64 bits
-        run: 7z a -t7z -mx=9 bin/Linux/Release/EMVParserTool64.7z bin/Win64/Release/EmvParser.exe
+        run: 7z a -t7z -mx=9 bin/Linux/Release/EMVParserTool64.7z premake5.lua
       - name: Upload Package
         uses: actions/upload-release-asset@v1
         with:
