@@ -90,8 +90,9 @@ void MainFrame::OnAbout(wxCommandEvent& event)
 
 void Display2Hexadecimal(const wxString& dsp, unsigned char* output)
 {
+	size_t count = dsp.size();
 	wxVector<unsigned char> outputVector;
-	for (size_t i = 0, j = 0; i < dsp.size() / 2; i += 2, j++)
+	for (size_t i = 0, j = 0; i < count; i += 2, j++)
 	{
 		wxString hexDigits = dsp.Mid(i, 2);
 		//output[j] = wxHexToDec(hexDigits);
@@ -102,7 +103,7 @@ void Display2Hexadecimal(const wxString& dsp, unsigned char* output)
 
 bool SanitizeString(wxString& input)
 {
-	wxRegEx clearSpacesAndXs(wxT("[^0-9A-F]\s*"), wxRE_NEWLINE);
+	wxRegEx clearSpacesAndXs(wxT("([^0-9A-F])|(0[Xx])"));
 	wxRegEx hexFormat(wxT("[^A-F0-9]"), wxRE_NEWLINE);
 	input.Trim();
 
