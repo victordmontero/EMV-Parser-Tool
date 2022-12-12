@@ -2,9 +2,7 @@ name: Build CI
 
 on:
   push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+    branches: [ "dev/**" ]
   workflow_dispatch:
 
 jobs:
@@ -29,6 +27,7 @@ jobs:
       with:
         name: EMVParserToolLinux
         path: bin/Linux/Release/EmvParser
+        retention-days: 2
   windows_job:
     name: Builiding for Windows
     runs-on: windows-latest
@@ -54,9 +53,11 @@ jobs:
         with:
             name: EMVParserTool32
             path: bin/Win32/Release/EmvParser.exe
+            retention-days: 2
       - uses: actions/upload-artifact@v3
         with:
             name: EMVParserTool64
             path: bin/Win64/Release/EmvParser.exe
-       
+            retention-days: 2
+            
         
