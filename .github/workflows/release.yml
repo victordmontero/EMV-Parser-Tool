@@ -31,6 +31,9 @@ jobs:
     - uses: edgarrc/action-7z@v1
       with:
         args: 7z a -t7z -mx=9 bin/Linux/Release/EmvParserLinux.7z bin/Linux/Release/EmvParser
+    - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%d-%m-%Y')"
     - name: Generate Release Notes
       uses: johnyherangi/create-release-notes@main
       id: generate_changelog
@@ -44,8 +47,8 @@ jobs:
       with:
             draft: false
             prerelease: false
-            release_name: ${{ env.package_name }}
-            tag_name: ${{ env.package_name }}
+            release_name: v${{ steps.date.outputs.date }}
+            tag_name: v${{ steps.date.outputs.date }}
             body: ${{steps.generate_changelog.outputs.release-notes}}
       env:
           GITHUB_TOKEN: ${{ github.token }}
