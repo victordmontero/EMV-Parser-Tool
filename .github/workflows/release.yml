@@ -92,12 +92,10 @@ jobs:
             name: EMVParserTool64
             path: bin/Win64/Release/EmvParser.exe
             retention-days: 2
-      - uses: edgarrc/action-7z@v1
-        with:
-          args: 7z a -t7z -mx=9 bin/Linux/Release/EMVParserTool32.7z bin/Win32/Release/EmvParser.exe
-      - uses: edgarrc/action-7z@v1
-        with:
-          args: 7z a -t7z -mx=9 bin/Linux/Release/EMVParserTool64.7z bin/Win64/Release/EmvParser.exe
+      - name: Compressing for 32 bits
+        run: 7z a -t7z -mx=9 bin/Linux/Release/EMVParserTool32.7z bin/Win32/Release/EmvParser.exe
+      - name: Compressing for 64 bits
+        run: 7z a -t7z -mx=9 bin/Linux/Release/EMVParserTool64.7z bin/Win64/Release/EmvParser.exe
       - name: Upload Package
         uses: actions/upload-release-asset@v1
         with:
