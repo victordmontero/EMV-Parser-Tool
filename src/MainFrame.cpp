@@ -157,5 +157,6 @@ void MainFrame::OnParse(wxCommandEvent& event)
 
 void MainFrame::OnClear(wxCommandEvent& event)
 {
+	txtEmvOutput->Clear();
 	event.Skip();
 }
