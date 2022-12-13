@@ -1,5 +1,6 @@
 #include<MainFrame.h>
 #include<wx/regex.h>
+#include<fstream>
 extern "C"
 {
 #include<emvTagList.h>
@@ -17,7 +18,7 @@ MainFrame::MainFrame(const wxString& title, const wxPoint& pos, const wxSize& si
 	wxMenu* menuFile = new wxMenu();
 	wxMenu* menuAbout = new wxMenu();
 
-	menuFile->Append(ID_SAVE_LOG, wxT("Save Logs\tCtlr-S"));
+	menuFile->Append(ID_SAVE_LOG, wxT("Save Output\tCtrl-S"));
 	menuFile->AppendSeparator();
 	menuFile->Append(wxID_EXIT, wxT("Exit\tAlt-x"));
 	menuAbout->Append(wxID_ABOUT);
@@ -114,6 +115,19 @@ bool SanitizeString(wxString& input)
 
 void MainFrame::OnSaveLog(wxCommandEvent& event)
 {
+	wxString path = wxSaveFileSelector(wxEmptyString, ".log", wxEmptyString, this);
+
+	if (!path.empty())
+	{
+		std::ofstream ofs(path.ToStdString());
+
+		if (ofs.is_open() && ofs.good())
+		{
+			ofs << txtEmvOutput->GetValue().ToStdString();
+			ofs.close();
+		}
+	}
+
 	event.Skip();
 }
 
@@ -143,5 +157,6 @@ void MainFrame::OnParse(wxCommandEvent& event)
 
 void MainFrame::OnClear(wxCommandEvent& event)
 {
+	txtEmvOutput->Clear();
 	event.Skip();
 }
