@@ -133,12 +133,12 @@ void MainFrame::OnSaveLog(wxCommandEvent& event)
 
 void MainFrame::OnParse(wxCommandEvent& event)
 {
-	char result[4096] = { 0 };
+	char result[8192] = { 0 };
 
 	wxString input = txtEmvInput->GetValue();
 	if (SanitizeString(input))
 	{
-		unsigned char output[4096] = { 0 };
+		unsigned char output[8192] = { 0 };
 		Display2Hexadecimal(input, output);
 
 		tlvInfo_t* t = new tlvInfo_t[input.size() / 2];
@@ -150,7 +150,6 @@ void MainFrame::OnParse(wxCommandEvent& event)
 
 		delete[] t;
 	}
-
 	
 	event.Skip();
 }
