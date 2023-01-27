@@ -116,9 +116,9 @@ jobs:
       - name: Build app for release 64bits
         run: msbuild EmvParser.sln -t:rebuild -verbosity:diag -property:Configuration=Release -property:Platform=Win64
       - name: Compressing for 32 bits
-        run: 7z a -t7z -mx=9 bin/Linux/Release/EMVParserTool32.7z bin/Win32/Release/EmvParser.exe
+        run: 7z a -t7z -mx=9 bin/Win32/Release/EMVParserTool32.7z bin/Win32/Release/EmvParser.exe
       - name: Compressing for 64 bits
-        run: 7z a -t7z -mx=9 bin/Linux/Release/EMVParserTool64.7z bin/Win64/Release/EmvParser.exe
+        run: 7z a -t7z -mx=9 bin/Win64/Release/EMVParserTool64.7z bin/Win64/Release/EmvParser.exe
       - name: Uploading Win32 Artifact
         uses: actions/upload-artifact@v3
         with:
