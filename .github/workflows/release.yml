@@ -1,7 +1,7 @@
 name: Release Build CI
 
 on:
-  pull_request:
+  push:
     branches: [ "master" ]
   workflow_dispatch:
 
@@ -124,16 +124,6 @@ jobs:
           msbuild-architecture: x64
       - name: Build app for release 64bits
         run: msbuild EmvParser.sln -t:rebuild -verbosity:diag -property:Configuration=Release -property:Platform=Win64
-      - uses: actions/upload-artifact@v3
-        with:
-            name: EMVParserTool32
-            path: bin/Win32/Release/EmvParser.exe
-            retention-days: 2
-      - uses: actions/upload-artifact@v3
-        with:
-            name: EMVParserTool64
-            path: bin/Win64/Release/EmvParser.exe
-            retention-days: 2
       - name: Compressing for 32 bits
         run: 7z a -t7z -mx=9 bin/Linux/Release/EMVParserTool32.7z bin/Win32/Release/EmvParser.exe
       - name: Compressing for 64 bits
