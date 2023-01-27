@@ -45,7 +45,7 @@ jobs:
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: bin/Win32/Release/EMVParserTool32.7z
+        asset_path: EMVParserTool32.7z
         asset_name: EMVParserTool32.7z
         asset_content_type: application/x-7z-compressed
       env:
@@ -54,7 +54,7 @@ jobs:
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: bin/Win64/Release/EMVParserTool64.7z
+        asset_path: EMVParserTool64.7z
         asset_name: EMVParserTool64.7z
         asset_content_type: application/x-7z-compressed
       env:
@@ -63,7 +63,7 @@ jobs:
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: bin/Linux/Release/EmvParserLinux.tar.gz
+        asset_path: EmvParserLinux.tar.gz
         asset_name: EmvParserLinux.tar.gz
         asset_content_type: application/gzip
       env:
