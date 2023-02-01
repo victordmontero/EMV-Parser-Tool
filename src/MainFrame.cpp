@@ -11,7 +11,8 @@ dict_t* dict[HASHSIZE];
 MainFrame::MainFrame(const wxString& title, const wxPoint& pos, const wxSize& size)
 	: wxFrame(NULL, wxID_ANY, title, pos, size)
 {
-	SetMinSize(size);
+	SetMinSize(size);	
+	SetIcon(wxIcon(wxT("chip_card")));
 
 	wxMenuBar* menuBar = new wxMenuBar();
 
