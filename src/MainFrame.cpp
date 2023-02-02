@@ -1,9 +1,11 @@
 #include<MainFrame.h>
 #include<wx/regex.h>
 #include<fstream>
+
 extern "C"
 {
 #include<emvTagList.h>
+#include "../card_chip.xpm"
 }
 
 dict_t* dict[HASHSIZE];
@@ -12,7 +14,7 @@ MainFrame::MainFrame(const wxString& title, const wxPoint& pos, const wxSize& si
 	: wxFrame(NULL, wxID_ANY, title, pos, size)
 {
 	SetMinSize(size);	
-	SetIcon(wxIcon(wxT("chip_card")));
+	SetIcon(wxIcon(chip_card_xpm));
 
 	wxMenuBar* menuBar = new wxMenuBar();
 
