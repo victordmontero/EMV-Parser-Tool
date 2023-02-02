@@ -21,6 +21,7 @@ workspace "EmvParser"
 	   files ({
 			"include/**.h*",
 			"src/**.c*",
+			"*.rc",
 			"*.lua"
 		})
 		

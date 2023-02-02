@@ -45,7 +45,7 @@ jobs:
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: bin/Linux/Release/EMVParserTool32.7z
+        asset_path: EMVParserTool32.7z
         asset_name: EMVParserTool32.7z
         asset_content_type: application/x-7z-compressed
       env:
@@ -54,7 +54,7 @@ jobs:
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: bin/Linux/Release/EMVParserTool64.7z
+        asset_path: EMVParserTool64.7z
         asset_name: EMVParserTool64.7z
         asset_content_type: application/x-7z-compressed
       env:
@@ -62,10 +62,10 @@ jobs:
     - name: Upload Package for Linux
       uses: actions/upload-release-asset@v1
       with:
-            upload_url: ${{ steps.create_release.outputs.upload_url }}
-            asset_path: bin/Linux/Release/EmvParserLinux.tar.gz
-            asset_name: EmvParserLinux.tar.gz
-            asset_content_type: application/gzip
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: EmvParserLinux.tar.gz
+        asset_name: EmvParserLinux.tar.gz
+        asset_content_type: application/gzip
       env:
           GITHUB_TOKEN: ${{ github.token }}
     outputs:
@@ -84,25 +84,18 @@ jobs:
     - name: Generating makefiles
       run: premake5 gmake2
     - name: Installing GTK3
-      run: sudo apt-get install libgtk-3-dev
+      run: |
+        sudo apt-get update
+        sudo apt-get install libgtk-3-dev
     - name: Building..
       run: make config=release_linux
+    - name: Compressing...
+      run: tar -zcvf bin/Linux/Release/EmvParserLinux.tar.gz bin/Linux/Release/EmvParser
     - uses: actions/upload-artifact@v3
       with:
         name: EMVParserToolLinux
-        path: bin/Linux/Release/EmvParser
+        path: bin/Linux/Release/EmvParserLinux.tar.gz
         retention-days: 2
-    - name: Compressing...
-      run: tar -zcvf bin/Linux/Release/EmvParserLinux.tar.gz bin/Linux/Release/EmvParser
-    # - name: Upload Package
-      # uses: actions/upload-release-asset@v1
-      # with:
-            # upload_url: ${{ needs.release_job.outputs.upload_url }}
-            # asset_path: bin/Linux/Release/EmvParserLinux.tar.gz
-            # asset_name: EmvParserLinux.tar.gz
-            # asset_content_type: application/gzip
-      # env:
-          # GITHUB_TOKEN: ${{ github.token }}
   windows_job:
     name: Builiding for Windows
     runs-on: windows-latest
@@ -125,36 +118,18 @@ jobs:
       - name: Build app for release 64bits
         run: msbuild EmvParser.sln -t:rebuild -verbosity:diag -property:Configuration=Release -property:Platform=Win64
       - name: Compressing for 32 bits
-        run: 7z a -t7z -mx=9 bin/Linux/Release/EMVParserTool32.7z bin/Win32/Release/EmvParser.exe
+        run: 7z a -t7z -mx=9 bin/Win32/Release/EMVParserTool32.7z bin/Win32/Release/EmvParser.exe
       - name: Compressing for 64 bits
-        run: 7z a -t7z -mx=9 bin/Linux/Release/EMVParserTool64.7z bin/Win64/Release/EmvParser.exe
+        run: 7z a -t7z -mx=9 bin/Win64/Release/EMVParserTool64.7z bin/Win64/Release/EmvParser.exe
       - name: Uploading Win32 Artifact
         uses: actions/upload-artifact@v3
         with:
             name: EMVParserTool32
-            path: bin/Linux/Release/EMVParserTool32.7z
+            path: bin/Win32/Release/EMVParserTool32.7z
             retention-days: 1
       - name: Uploading Win64 Artifact
         uses: actions/upload-artifact@v3
         with:
             name: EMVParserTool64
-            path: bin/Linux/Release/EMVParserTool64.7z
+            path: bin/Win64/Release/EMVParserTool64.7z
             retention-days: 1
-      # - name: Upload Package
-        # uses: actions/upload-release-asset@v1
-        # with:
-            # upload_url: ${{ needs.release_job.outputs.upload_url }}
-            # asset_path: bin/Linux/Release/EMVParserTool32.7z
-            # asset_name: EMVParserTool32.7z
-            # asset_content_type: application/x-7z-compressed
-        # env:
-          # GITHUB_TOKEN: ${{ github.token }}
-      # - name: Upload Package
-        # uses: actions/upload-release-asset@v1
-        # with:
-            # upload_url: ${{ needs.release_job.outputs.upload_url }}
-            # asset_path: bin/Linux/Release/EMVParserTool64.7z
-            # asset_name: EMVParserTool64.7z
-            # asset_content_type: application/x-7z-compressed
-        # env:
-          # GITHUB_TOKEN: ${{ github.token }}
